@@ -1,0 +1,240 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.error-message {
+    background-color: #ff4444;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hello-card {
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0 30px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.hello-card:hover {
+    transform: translateY(-5px);
+}
+
+.hello-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.hello-message {
+    font-size: 28px;
+    font-weight: bold;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.api-info {
+    background: rgba(0,0,0,0.2);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.messages-section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.messages-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.add-message {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.add-message input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.add-message input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.add-message button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-message button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.add-message button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 1.1rem;
+}
+
+.messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message-item {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 15px;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.message-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.message-content p {
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.message-content small {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.message-id {
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid #ddd;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: white;
+    font-size: 0.85rem;
+}
+
+footer p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .hello-message {
+        font-size: 20px;
+    }
+
+    .add-message {
+        flex-direction: column;
+    }
+
+    .add-message button {
+        width: 100%;
+    }
+}

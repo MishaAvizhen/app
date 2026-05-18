@@ -1,0 +1,14 @@
+<div class="message-list">
+    <h3>Messages</h3>
+    <div *ngIf="messages.length === 0" class="no-messages">
+        No messages yet. Add one above!
+    </div>
+    <ul *ngIf="messages.length > 0">
+        <li *ngFor="let message of messages">
+            <span class="message-content">{{ message.content }}</span>
+            <span class="message-date">{{ message.createdAt | date:'medium' }}</span>
+
+
+        </li>
+    </ul>
+</div>

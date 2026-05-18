@@ -1,0 +1,110 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+h2 {
+    color: #666;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.hello-message {
+    text-align: center;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+.message-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.message-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.message-list li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-content {
+    font-size: 16px;
+    font-weight: bold;
+    flex: 1;
+}
+
+.message-date {
+    font-size: 12px;
+    color: #999;
+    margin: 0 15px;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.no-messages {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
