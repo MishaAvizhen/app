@@ -8,11 +8,13 @@ import {AppComponent} from './app.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import {AddressComponent} from "./address/address.component";
 
 
 @NgModule({
     declarations: [
         AppComponent,
+        AddressComponent
 
     ],
     imports: [

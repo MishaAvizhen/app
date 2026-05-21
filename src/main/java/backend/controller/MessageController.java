@@ -4,7 +4,7 @@ package backend.controller;
 
 
 
-import backend.entity.Message;
+import backend.entities.Message;
 import backend.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
