@@ -5,7 +5,6 @@ package backend.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -16,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 
 @Configuration
@@ -37,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 // 3. ВАЖНО: Пропускаем все предварительные preflight-запросы (OPTIONS)
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 // 4. Остальные правила доступа
-                .antMatchers("/", "/index.html", "/*.js", "/*.css", "/assets/**").permitAll()
+                .antMatchers("/", "/index.html", "/*.js", "/*.css", "/frontend/src/app/assets/**").permitAll()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/", "/**").permitAll()
                 .anyRequest().authenticated();

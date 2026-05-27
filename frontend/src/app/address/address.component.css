@@ -252,3 +252,29 @@
     color: #495057;
     background-color: #e9ecef;
 }
+.address-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.address-main, .work-schedule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.work-schedule {
+    font-size: 14px;
+    color: #555;
+    padding-left: 4px;
+}
+
+.schedule-icon {
+    font-size: 16px;
+}
+

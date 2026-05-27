@@ -1,5 +1,5 @@
 <div class="search-container">
-    <h2 class="search-title">Поиск адреса</h2>
+    <h2 class="search-title">График работ</h2>
 
     <div class="search-bar">
 
@@ -59,7 +59,7 @@
 
     </div>
 
-    <!-- Блок результатов (без изменений) -->
+    <!-- Блок результатов -->
     <div class="results-container">
         <div class="results-header" *ngIf="results.length > 0">
             Найдено адресов: {{ results.length }}
@@ -70,10 +70,18 @@
         <ul class="results-list" *ngIf="results.length > 0">
             <li *ngFor="let addr of results" class="results-item">
                 <div class="address-card">
-                    <span class="address-marker">🏠</span>
-                    <span class="address-text">
-            <strong>{{ addr.city }}</strong>, ул. {{ addr.street }}, д. {{ addr.houseNumber }}
-          </span>
+                    <div class="address-main">
+                        <span class="address-marker">🏠</span>
+                        <span class="address-text">
+                        <strong>{{ addr.city }}</strong>, ул. {{ addr.street }}, д. {{ addr.houseNumber }}
+                    </span>
+                    </div>
+
+                    <!-- Блок графика работы -->
+                    <div class="work-schedule" *ngIf="addr.schedule">
+                        <span class="schedule-icon">🕒</span>
+                        <span class="schedule-text">{{ addr.schedule }}</span>
+                    </div>
                 </div>
             </li>
         </ul>

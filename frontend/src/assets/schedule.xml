@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addresses>
+    <address>
+        <city>Минск</city>
+        <street>Ленина</street>
+        <house>10</house>
+        <workTime>Пн-Пт: 09:00 - 20:00, Сб: 10:00 - 16:00</workTime>
+    </address>
+    <address>
+        <city>Минск</city>
+        <street>Победителей</street>
+        <house>5</house>
+        <workTime>Ежедневно: 10:00 - 22:00</workTime>
+    </address>
+    <address>
+        <city>Брест</city>
+        <street>Буденного</street>
+        <house>17</house>
+        <workTime>Ежедневно: 10:00 - 22:00</workTime>
+    </address>
+</addresses>
