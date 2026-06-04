@@ -8,13 +8,14 @@ import {AppComponent} from './app.component';
 
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import {AddressComponent} from "./address/address.component";
+
+import {ScheduleComponent} from "./schedule/schedule.component";
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        AddressComponent
+        ScheduleComponent
 
     ],
     imports: [

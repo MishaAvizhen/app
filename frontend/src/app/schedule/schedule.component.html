@@ -1,0 +1,124 @@
+<div class="schedule-container">
+    <h2>График проведения работ</h2>
+
+    <!-- Сетка поиска -->
+    <div class="search-grid" *ngIf="!isLoading && schedules.length > 0">
+        <!-- Поле: Город -->
+        <div class="search-field">
+            <label>Город</label>
+            <div class="input-wrapper">
+                <input type="text" [(ngModel)]="searchCity" (input)="onInputChange()" list="citiesData" placeholder="Например: Минск" class="search-input" />
+                <button class="clear-btn" *ngIf="searchCity" (click)="searchCity = ''; searchStreet = ''; searchBuilding = ''; onInputChange();">&times;</button>
+                <datalist id="citiesData">
+                    <option *ngFor="let city of citiesList" [value]="city"></option>
+                </datalist>
+            </div>
+        </div>
+
+        <!-- Поле: Улица -->
+        <div class="search-field">
+            <label>Улица</label>
+            <div class="input-wrapper">
+                <input type="text" [(ngModel)]="searchStreet" (input)="onInputChange()" list="streetsData" placeholder="Например: Притыцкого" class="search-input" />
+                <button class="clear-btn" *ngIf="searchStreet" (click)="searchStreet = ''; searchBuilding = ''; onInputChange();">&times;</button>
+                <datalist id="streetsData">
+                    <option *ngFor="let street of streetsList" [value]="street"></option>
+                </datalist>
+            </div>
+        </div>
+
+        <!-- Поле: Номер дома -->
+        <div class="search-field">
+            <label>Номер дома</label>
+            <div class="input-wrapper">
+                <input type="text" [(ngModel)]="searchBuilding" (input)="onInputChange()" placeholder="Например: 91" class="search-input" />
+                <button class="clear-btn" *ngIf="searchBuilding" (click)="searchBuilding = ''; onInputChange();">&times;</button>
+            </div>
+        </div>
+
+        <!-- Общая кнопка очистки всех полей -->
+        <div class="actions-block" *ngIf="searchCity || searchStreet || searchBuilding">
+            <button class="reset-all-btn" (click)="clearAllFilters()">Очистить всё</button>
+        </div>
+    </div>
+
+    <!-- Состояние загрузки -->
+    <div *ngIf="isLoading" class="loading">Загрузка данных...</div>
+
+    <!-- Вывод результатов -->
+    <div *ngIf="!isLoading">
+        <!-- ВНИМАНИЕ: Теперь цикл идет по pagedSchedules вместо метода фильтрации -->
+        <div *ngFor="let sc of pagedSchedules; trackBy: trackByAddress" class="address-card">
+            <h3>г. {{ sc.city }}, ул. {{ sc.street }}, д. {{ sc.building }}</h3>
+
+            <table class="schedule-table">
+                <thead>
+                <tr>
+                    <th>Объект / Подъезд</th>
+                    <th>Дата проведения</th>
+                    <th>Время</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of sc.items">
+                    <td>{{ item.workDescription }}</td>
+                    <td>{{ item.workDate }}</td>
+                    <td>{{ item.workStartTime }} – {{ item.workEndTime }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Заглушка пустого поиска -->
+        <div *ngIf="pagedSchedules.length === 0 && schedules.length > 0" class="no-data">
+            По вашему запросу ничего не найдено.
+        </div>
+
+        <!-- БЛОК ПАГИНАЦИИ -->
+        <div class="pagination" *ngIf="totalPages > 1">
+            <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+                &larr; Назад
+            </button>
+
+            <span class="page-info">
+        Страница <strong>{{ currentPage }}</strong> из {{ totalPages }}
+      </span>
+
+            <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+                Вперед &rarr;
+            </button>
+        </div>
+
+    </div>
+    <!-- ОБНОВЛЕННЫЙ БЛОК ПАГИНАЦИИ -->
+    <div class="pagination" *ngIf="!isLoading && schedules.length > 0">
+
+        <!-- Селектор выбора количества элементов на странице -->
+        <div class="page-size-selector">
+            <label for="pageSizeSelect">Показывать по:</label>
+            <select id="pageSizeSelect" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="page-size-select">
+                <option [ngValue]="2">2</option>
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="20">20</option>
+            </select>
+        </div>
+
+        <!-- Кнопки управления страницами (показываются только если страниц больше одной) -->
+        <div class="pagination-nav" *ngIf="totalPages > 1">
+            <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+                &larr; Назад
+            </button>
+
+            <span class="page-info">
+          Страница <strong>{{ currentPage }}</strong> из {{ totalPages }}
+        </span>
+
+            <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+                Вперед &rarr;
+            </button>
+        </div>
+
+    </div>
+
+</div>
