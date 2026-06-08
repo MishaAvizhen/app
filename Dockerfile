@@ -1,11 +1,14 @@
-# Этап 1: Сборка проекта с помощью стабильного Maven на Java 8
+# Этап 1: Сборка проекта (Java + Frontend)
 FROM maven:3.9.6-amazoncorretto-8 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+
+# Копируем абсолютно все файлы проекта в контейнер сборки
+COPY . .
+
+# Запускаем сборку Maven. Плагин теперь найдет папку frontend
 RUN mvn clean package -DskipTests
 
-# Этап 2: Запуск готового jar в минимальном JRE образе
+# Этап 2: Минимальный контейнер для запуска готового .jar
 FROM eclipse-temurin:8-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
