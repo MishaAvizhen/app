@@ -48,7 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         // Разрешаем конкретные фронтенд-адреса (нельзя использовать "*" при allowCredentials(true))
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:8082",
-                "http://192.168.100.50:8082"
+                "http://192.168.100.50:8082",
+                "https://app-5vck.onrender.com/"
         ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
