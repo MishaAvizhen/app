@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 
 import {ScheduleComponent} from "./schedule/schedule.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {ScheduleComponent} from "./schedule/schedule.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
         HttpClientModule,  // This is correct for Angular 8
         FormsModule
     ],

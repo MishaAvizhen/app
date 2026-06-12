@@ -1,14 +1,20 @@
 <div class="schedule-container">
-    <h2>График проведения работ</h2>
+    <!-- Шапка в стиле Wix: крупный заголовок и лаконичный подзаголовок -->
+    <div class="wix-header">
+        <h2>График проведения работ</h2>
+        <p class="wix-subtitle">Узнайте точное время и статус проведения плановых мероприятий по вашему адресу</p>
+    </div>
 
     <!-- Сетка поиска -->
     <div class="search-grid" *ngIf="!isLoading && schedules.length > 0">
         <!-- Поле: Город -->
         <div class="search-field">
-            <label>Город</label>
+            <label for="cityInput">Город</label>
             <div class="input-wrapper">
-                <input type="text" [(ngModel)]="searchCity" (input)="onInputChange()" list="citiesData" placeholder="Например: Минск" class="search-input" />
-                <button class="clear-btn" *ngIf="searchCity" (click)="searchCity = ''; searchStreet = ''; searchBuilding = ''; onInputChange();">&times;</button>
+                <span class="field-icon">🏙️</span>
+                <input id="cityInput" type="text" [(ngModel)]="searchCity" (input)="onInputChange()" list="citiesData" placeholder="Например: Минск" class="search-input" />
+                <!-- ИСПРАВЛЕНО: Кнопка стирает только город, не ломая фильтр в любой последовательности -->
+                <button class="clear-btn" *ngIf="searchCity" (click)="searchCity = ''; onInputChange();" aria-label="Очистить город">&times;</button>
                 <datalist id="citiesData">
                     <option *ngFor="let city of citiesList" [value]="city"></option>
                 </datalist>
@@ -17,10 +23,13 @@
 
         <!-- Поле: Улица -->
         <div class="search-field">
-            <label>Улица</label>
+            <label for="streetInput">Улица</label>
             <div class="input-wrapper">
-                <input type="text" [(ngModel)]="searchStreet" (input)="onInputChange()" list="streetsData" placeholder="Например: Притыцкого" class="search-input" />
-                <button class="clear-btn" *ngIf="searchStreet" (click)="searchStreet = ''; searchBuilding = ''; onInputChange();">&times;</button>
+                <span class="field-icon">📍</span>
+                <!-- ИСПРАВЛЕНО: Убран атрибут [disabled], поле доступно в любой последовательности -->
+                <input id="streetInput" type="text" [(ngModel)]="searchStreet" (input)="onInputChange()" list="streetsData" placeholder="Например: Притыцкого" class="search-input" />
+                <!-- ИСПРАВЛЕНО: Кнопка стирает только улицу -->
+                <button class="clear-btn" *ngIf="searchStreet" (click)="searchStreet = ''; onInputChange();" aria-label="Очистить улицу">&times;</button>
                 <datalist id="streetsData">
                     <option *ngFor="let street of streetsList" [value]="street"></option>
                 </datalist>
@@ -29,96 +38,96 @@
 
         <!-- Поле: Номер дома -->
         <div class="search-field">
-            <label>Номер дома</label>
+            <label for="buildingInput">Номер дома</label>
             <div class="input-wrapper">
-                <input type="text" [(ngModel)]="searchBuilding" (input)="onInputChange()" placeholder="Например: 91" class="search-input" />
-                <button class="clear-btn" *ngIf="searchBuilding" (click)="searchBuilding = ''; onInputChange();">&times;</button>
+                <span class="field-icon">🏠</span>
+                <!-- ИСПРАВЛЕНО: Убран атрибут [disabled] -->
+                <input id="buildingInput" type="text" [(ngModel)]="searchBuilding" (input)="onInputChange()" placeholder="Например: 91" class="search-input" />
+                <button class="clear-btn" *ngIf="searchBuilding" (click)="searchBuilding = ''; onInputChange();" aria-label="Очистить дом">&times;</button>
             </div>
         </div>
 
         <!-- Общая кнопка очистки всех полей -->
         <div class="actions-block" *ngIf="searchCity || searchStreet || searchBuilding">
-            <button class="reset-all-btn" (click)="clearAllFilters()">Очистить всё</button>
+            <button class="reset-all-btn" (click)="clearAllFilters()">
+                <span class="reset-icon">🔄</span> Очистить всё
+            </button>
         </div>
     </div>
 
-    <!-- Состояние загрузки -->
-    <div *ngIf="isLoading" class="loading">Загрузка данных...</div>
+    <!-- Состояние загрузки (Wix-лоадер) -->
+    <div *ngIf="isLoading" class="loading" role="status">
+        <div class="spinner"></div>
+        <p>Получение актуального расписания...</p>
+    </div>
 
     <!-- Вывод результатов -->
     <div *ngIf="!isLoading">
-        <!-- ВНИМАНИЕ: Теперь цикл идет по pagedSchedules вместо метода фильтрации -->
-        <div *ngFor="let sc of pagedSchedules; trackBy: trackByAddress" class="address-card">
-            <h3>г. {{ sc.city }}, ул. {{ sc.street }}, д. {{ sc.building }}</h3>
+        <!-- НАСТРОЕНА АНИМАЦИЯ: Обертка триггера анимации плавного появления карточек при фильтрации и пагинации -->
+        <div [@cardAnimation]="pagedSchedules.length">
+            <div *ngFor="let sc of pagedSchedules; trackBy: trackByAddress" class="address-card">
+                <div class="card-header">
+                    <div class="address-badge">Адрес объекта</div>
+                    <h3>г. {{ sc.city }}, ул. {{ sc.street }}, д. {{ sc.building }}</h3>
+                </div>
 
-            <table class="schedule-table">
-                <thead>
-                <tr>
-                    <th>Объект / Подъезд</th>
-                    <th>Дата проведения</th>
-                    <th>Время</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let item of sc.items">
-                    <td>{{ item.workDescription }}</td>
-                    <td>{{ item.workDate }}</td>
-                    <td>{{ item.workStartTime }} – {{ item.workEndTime }}</td>
-                </tr>
-                </tbody>
-            </table>
+                <table class="schedule-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Объект / Подъезд</th>
+                        <th scope="col">Дата проведения</th>
+                        <th scope="col">Время</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of sc.items">
+                        <td data-label="Объект / Подъезд" class="font-medium">{{ item.workDescription }}</td>
+                        <!-- Стильный тег для даты в Wix стиле -->
+                        <td data-label="Дата проведения"><span class="date-tag">{{ item.workDate }}</span></td>
+                        <td data-label="Время" class="time-text">{{ item.workStartTime }} – {{ item.workEndTime }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Заглушка пустого поиска -->
         <div *ngIf="pagedSchedules.length === 0 && schedules.length > 0" class="no-data">
-            По вашему запросу ничего не найдено.
+            <div class="no-data-icon">🔍</div>
+            <p>Ничего не найдено</p>
+            <span>Попробуйте изменить параметры фильтрации или проверить написание</span>
         </div>
 
-        <!-- БЛОК ПАГИНАЦИИ -->
-        <div class="pagination" *ngIf="totalPages > 1">
-            <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
-                &larr; Назад
-            </button>
+        <!-- ЕДИНЫЙ ОБНОВЛЕННЫЙ БЛОК ПАГИНАЦИИ -->
+        <div class="pagination" *ngIf="schedules.length > 0 && pagedSchedules.length > 0">
+            <!-- Селектор выбора количества элементов на странице -->
+            <div class="page-size-selector">
+                <label for="pageSizeSelect">Показывать по:</label>
+                <div class="select-wrapper">
+                    <select id="pageSizeSelect" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="page-size-select">
+                        <option [ngValue]="2">2 адреса</option>
+                        <option [ngValue]="5">5 адресов</option>
+                        <option [ngValue]="10">10 адресов</option>
+                        <option [ngValue]="20">20 адресов</option>
+                    </select>
+                </div>
+            </div>
 
-            <span class="page-info">
-        Страница <strong>{{ currentPage }}</strong> из {{ totalPages }}
-      </span>
+            <!-- Кнопки управления страницами -->
+            <div class="pagination-nav" *ngIf="totalPages > 1">
+                <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+                    <span class="btn-arrow">&larr;</span> Назад
+                </button>
 
-            <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
-                Вперед &rarr;
-            </button>
+                <span class="page-info">
+                    Страница <strong>{{ currentPage }}</strong> из {{ totalPages }}
+                </span>
+
+                <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+                    Вперед <span class="btn-arrow">&rarr;</span>
+                </button>
+            </div>
+            <div>12.06.2026</div>
         </div>
-
     </div>
-    <!-- ОБНОВЛЕННЫЙ БЛОК ПАГИНАЦИИ -->
-    <div class="pagination" *ngIf="!isLoading && schedules.length > 0">
-
-        <!-- Селектор выбора количества элементов на странице -->
-        <div class="page-size-selector">
-            <label for="pageSizeSelect">Показывать по:</label>
-            <select id="pageSizeSelect" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="page-size-select">
-                <option [ngValue]="2">2</option>
-                <option [ngValue]="5">5</option>
-                <option [ngValue]="10">10</option>
-                <option [ngValue]="20">20</option>
-            </select>
-        </div>
-
-        <!-- Кнопки управления страницами (показываются только если страниц больше одной) -->
-        <div class="pagination-nav" *ngIf="totalPages > 1">
-            <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
-                &larr; Назад
-            </button>
-
-            <span class="page-info">
-          Страница <strong>{{ currentPage }}</strong> из {{ totalPages }}
-        </span>
-
-            <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
-                Вперед &rarr;
-            </button>
-        </div>
-
-    </div>
-
 </div>

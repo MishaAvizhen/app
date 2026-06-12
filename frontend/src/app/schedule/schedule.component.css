@@ -1,67 +1,74 @@
-/* ==========================================================================
-   1. ОБЩИЕ СТИЛИ КОНТЕЙНЕРА И СТРАНИЦЫ
-   ========================================================================== */
-.schedule-container {
-    max-width: 1000px; /* Немного шире для лучшего восприятия информации */
-    margin: 3rem auto;
-    padding: 0 2rem;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #1e293b; /* Более мягкий темный оттенок вместо чисто черного */
+/* Корректный импорт шрифта Plus Jakarta Sans с Google Fonts */
+@import url('https://googleapis.com');
+
+/* Стилизация контейнера под Wix Studio */
+:host, .schedule-container, .schedule-wrapper {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
     background-color: #ffffff;
+    padding: 50px;
+    border-radius: 24px;
+    max-width: 1100px;
+    margin: 40px auto;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02), 0 24px 60px -12px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    /* Анимация плавного появления самого контейнера */
+    animation: fadeInContainer 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.schedule-container h2 {
-    font-size: 2rem;
+/* Заголовки Wix Эстетика */
+.wix-header {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 32px;
     font-weight: 700;
-    letter-spacing: -0.025em;
+    margin: 0 0 10px 0;
     color: #0f172a;
-    margin-bottom: 2.5rem;
-    border-bottom: 1px solid #f1f5f9; /* Едва заметная тонкая линия */
-    padding-bottom: 1rem;
+    letter-spacing: -0.03em;
 }
 
-/* Состояния загрузки и отсутствия данных */
-.loading, .no-data {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-color: #f8fafc;
-    border-radius: 12px;
-    border: 1px dashed #e2e8f0;
+.wix-subtitle {
+    font-size: 16px;
     color: #64748b;
-    font-size: 1rem;
+    margin: 0;
+    font-weight: 400;
 }
 
-/* ==========================================================================
-   2. СЕТКА ФИЛЬТРОВ И ПОЛЯ ВВОДА (СОВРЕМЕННЫЙ МИНИМАЛИЗМ)
-   ========================================================================== */
+/* Сетка фильтров */
 .search-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    margin-bottom: 3rem;
-    background-color: #f8fafc; /* Светлый чистый фон */
-    padding: 1.5rem;
-    border-radius: 16px; /* Мягкие скругленные углы */
-    border: 1px solid #f1f5f9;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    background: #f8fafc;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 40px;
     align-items: flex-end;
 }
 
 .search-field {
-    flex: 1;
-    min-width: 200px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-field.field-disabled {
+    opacity: 0.5;
+    transform: scale(0.98);
 }
 
 .search-field label {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #64748b;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.07em;
 }
 
+/* Wix-стиль инпутов */
 .input-wrapper {
     position: relative;
     display: flex;
@@ -69,322 +76,281 @@
     width: 100%;
 }
 
+.field-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
 .search-input {
     width: 100%;
-    height: 44px; /* Увеличенная высота для удобства нажатия */
-    padding: 0 2.5rem 0 1rem; /* Больше отступа под крестик справа */
-    font-size: 0.95rem;
-    color: #0f172a;
+    padding: 14px 44px 14px 46px;
+    font-size: 15px;
+    font-weight: 500;
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    border-radius: 12px;
     background-color: #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02); /* Почти незаметная внутренняя тень */
-    box-sizing: border-box;
+    color: #0f172a;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
 }
 
-/* Эффект свечения при фокусе в стиле современных систем авторизации */
-.search-input:focus {
+/* Эффект при фокусе инпута (иконка тоже подсвечивается) */
+.search-input:focus:not([disabled]) {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+    border-color: #1064ea;
+    box-shadow: 0 0 0 4px rgba(16, 100, 234, 0.08);
 }
 
-/* Кнопка-крестик внутри поля */
+.search-input:focus:not([disabled]) ~ .field-icon {
+    color: #1064ea;
+}
+
+.search-input:disabled {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+}
+
+/* Кнопка сброса внутри инпута */
 .clear-btn {
     position: absolute;
-    right: 0.75rem;
-    background: #f1f5f9; /* Легкая подложка под крестик */
+    right: 14px;
+    background: #f1f5f9;
     border: none;
     color: #94a3b8;
-    font-size: 1.1rem;
-    width: 22px;
-    height: 22px;
     border-radius: 50%;
-    cursor: pointer;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.15s ease;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease, transform 0.1s ease;
 }
 
 .clear-btn:hover {
-    background-color: #fee2e2;
-    color: #ef4444;
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: scale(1.05);
 }
 
-.search-input::-ms-clear {
-    display: none;
-}
-
-/* Кнопка "Очистить всё" */
-.actions-block {
-    display: flex;
-    align-items: flex-end;
-}
-
+/* Кнопка сброса всех фильтров */
 .reset-all-btn {
-    background-color: #f1f5f9; /* Вместо агрессивного красного — стильный нейтральный фон */
-    color: #64748b;
-    border: 1px solid #e2e8f0;
-    padding: 0 1.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    white-space: nowrap;
-    height: 44px; /* Идеально вровень с инпутами */
-    transition: all 0.2s ease;
-}
-
-.reset-all-btn:hover {
-    background-color: #ef4444; /* Краснеет только при наведении */
-    color: #ffffff;
-    border-color: #ef4444;
-}
-
-.reset-all-btn:active {
-    transform: scale(0.98);
-}
-
-/* ==========================================================================
-   3. КАРТОЧКИ АДРЕСОВ И ТАБЛИЦЫ РАСПИСАНИЯ
-   ========================================================================== */
-.address-card {
-    background: #ffffff;
-    border-radius: 16px;
-    /* Мягкая, глубокая «невидимая» тень */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 15px -5px rgba(0, 0, 0, 0.03);
-    border: 1px solid #f1f5f9;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.address-card:hover {
-    transform: translateY(-4px); /* Чуть более выразительный подъем */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-    border-color: #e2e8f0;
-}
-
-/* Стильный заголовок адреса с акцентом */
-.address-card h3 {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-/* Таблица расписания */
-.schedule-table {
     width: 100%;
-    border-collapse: separate; /* Позволяет делать скругления внутри таблиц */
-    border-spacing: 0;
-    text-align: left;
-    font-size: 0.95rem;
-}
-
-.schedule-table th {
-    background-color: #f8fafc;
-    color: #475569;
+    padding: 14px 20px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-}
-
-/* Скругление углов у шапки таблицы */
-.schedule-table th:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
-.schedule-table th:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
-
-.schedule-table td {
-    padding: 1.25rem; /* Больше свободного пространства */
-    border-bottom: 1px solid #f1f5f9;
-    color: #334155;
-}
-
-/* Мягкий зебра-эффект */
-.schedule-table tbody tr:nth-child(even) {
-    background-color: #fbfcfd;
-}
-
-/* Интерактивная подсветка строки */
-.schedule-table tbody tr:hover {
-    background-color: #f0fdf4; /* Деликатный светло-зеленый оттенок (признак выполненной/готовой работы) */
-}
-
-.schedule-table td:first-child {
-    font-weight: 600;
-    color: #0f172a;
-}
-
-/* ==========================================================================
-   4. АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ СМАРТФОНЫ
-   ========================================================================== */
-@media (max-width: 650px) {
-    .schedule-container {
-        margin: 1.5rem auto;
-        padding: 0 1rem;
-    }
-
-    .schedule-container h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .search-grid {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem;
-        gap: 1rem;
-    }
-
-    .search-field {
-        min-width: 100%;
-    }
-
-    .actions-block, .reset-all-btn {
-        width: 100%;
-    }
-
-    .reset-all-btn {
-        text-align: center;
-        justify-content: center;
-    }
-
-    .address-card {
-        padding: 1.25rem;
-        border-radius: 12px;
-    }
-
-    .address-card h3 {
-        font-size: 1.15rem;
-    }
-
-    .schedule-table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-    }
-
-    .schedule-table td, .schedule-table th {
-        padding: 0.85rem 1rem;
-    }
-}
-/* ==========================================================================
-   5. СОВРЕМЕННЫЕ CSS-АНИМАЦИИ (FADE-IN & SLIDE-UP)
-   ========================================================================== */
-
-/* Анимация плавного появления для карточек адресов */
-.address-card {
-    animation: cardEntrance 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* Анимация для индикаторов загрузки и заглушек «Ничего не найдено» */
-.loading, .no-data {
-    animation: fadeIn 0.3s ease-out both;
-}
-
-/* Кнопка "Очистить всё" плавно проявляется при активации */
-.actions-block {
-    animation: fadeInScale 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-/* Ключевые кадры для карточек: деликатное выплывание снизу вверх */
-@keyframes cardEntrance {
-    from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.99);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Ключевые кадры для обычного проявления */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* Ключевые кадры для кнопки: эффект легкого «прыжка» из пустоты */
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.92);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Отключение анимаций для пользователей с повышенной чувствительностью (лучшая практика доступности) */
-@media (prefers-reduced-motion: reduce) {
-    .address-card, .loading, .no-data, .actions-block {
-        animation: none !important;
-        transition: none !important;
-    }
-}
-/* ==========================================================================
-   6. ПАГИНАЦИЯ (ПОСТРАНИЧНЫЙ ВЫВОД)
-   ========================================================================== */
-.pagination {
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px dashed #fca5a5;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 49px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding: 1rem;
-    background-color: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid #f1f5f9;
-    animation: fadeIn 0.3s ease-out both;
+    gap: 8px;
+    box-sizing: border-box;
 }
 
-/* Кнопки Назад / Вперед */
-.page-btn {
-    background-color: #ffffff;
-    color: #475569;
+.reset-all-btn:hover {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+    transform: translateY(-1px);
+}
+
+.reset-all-btn:active {
+    transform: translateY(0);
+}
+
+/* Wix Карточки результатов с эффектом выплывания */
+.address-card {
+    background: #ffffff;
     border: 1px solid #e2e8f0;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: all 0.2s ease;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Анимация проявления при рендере */
+    animation: slideUpCard 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.page-btn:hover:not([disabled]) {
+/* Эффект микро-подъема при наведении */
+.address-card:hover {
     border-color: #cbd5e1;
-    background-color: #f1f5f9;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.08);
+}
+
+.card-header {
+    margin-bottom: 24px;
+}
+
+.address-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #edf2f7;
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+.address-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* Минималистичные таблицы */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.schedule-table th {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.schedule-table td {
+    padding: 18px 16px;
+    font-size: 15px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background-color 0.2s ease;
+}
+
+/* Эффект подсветки строки таблицы при наведении */
+.schedule-table tr:hover td {
+    background-color: #f8fafc;
+}
+
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+.font-medium {
+    font-weight: 600;
     color: #0f172a;
 }
 
-/* Стили для заблокированных кнопок */
+/* Внутренние теги */
+.date-tag {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.address-card:hover .date-tag {
+    transform: scale(1.03);
+}
+
+.time-text {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+/* Wix-стиль Пагинация */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 40px;
+}
+
+.page-size-selector {
+    color: #64748b;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-size-select {
+    padding: 10px 36px 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #0f172a;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.page-size-select:focus {
+    border-color: #1064ea;
+    box-shadow: 0 0 0 3px rgba(16, 100, 234, 0.05);
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-btn:hover:not([disabled]) {
+    background-color: #1064ea;
+    transform: translateY(-1px);
+}
+
+.page-btn:active:not([disabled]) {
+    transform: translateY(0);
+}
+
 .page-btn:disabled {
     background-color: #f1f5f9;
     color: #94a3b8;
-    border-color: #e2e8f0;
     cursor: not-allowed;
-    box-shadow: none;
 }
 
-/* Текст информации о странице */
 .page-info {
-    font-size: 0.95rem;
+    font-size: 14px;
     color: #64748b;
 }
 
@@ -392,90 +358,161 @@
     color: #0f172a;
 }
 
-/* Адаптация для мобильных */
-@media (max-width: 600px) {
-    .pagination {
-        gap: 0.75rem;
-        justify-content: space-between;
-    }
-    .page-info {
-        font-size: 0.85rem;
-    }
-}
-/* Выравнивание элементов внутри пагинации */
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Кнопки и выбор лимита теперь разнесены по краям */
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding: 1rem 1.5rem;
-    background-color: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid #f1f5f9;
-    animation: fadeIn 0.3s ease-out both;
+/* Системные состояния с анимацией */
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8fafc;
+    border-radius: 20px;
+    border: 1px dashed #cbd5e1;
+    animation: fadeInContainer 0.4s ease forwards;
 }
 
-/* Контейнер навигационных кнопок */
-.pagination-nav {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+.no-data-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+    animation: pulseIcon 2s infinite ease-in-out;
 }
 
-/* Обертка для селектора */
-.page-size-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+.no-data p {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: #0f172a;
+}
+
+.no-data span {
+    font-size: 14px;
     color: #64748b;
 }
 
-/* Стилизация самого нативного выпадающего списка */
-.page-size-select {
-    padding: 0.35rem 1.75rem 0.35rem 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #475569;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    cursor: pointer;
-    outline: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-    transition: all 0.2s ease;
-
-    /* Кастомная стрелочка вместо стандартной браузерной */
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 1em;
+.loading {
+    text-align: center;
+    padding: 60px;
 }
 
-.page-size-select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #1064ea;
+    border-radius: 50%;
+    margin: 0 auto 16px auto;
+    animation: spin 0.6s linear infinite; /* Ускорили вращение для динамики */
 }
 
-/* Адаптивность для мобильных */
-@media (max-width: 600px) {
-    .pagination {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+/* ==========================================================================
+   КЛЮЧЕВЫЕ КАДРЫ ДЛЯ АНИМАЦИЙ (KEYFRAMES)
+   ========================================================================== */
+
+/* Вращение спиннера */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Мягкое появление главного контейнера */
+@keyframes fadeInContainer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Эффект выплывания карточек вверх */
+@keyframes slideUpCard {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Пульсация иконки "Нет данных" */
+@keyframes pulseIcon {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+/* Адаптивность под мобильные */
+@media (max-width: 768px) {
+    .schedule-container, .schedule-wrapper {
+        padding: 24px;
+        margin: 10px;
     }
 
-    .page-size-selector {
-        width: 100%;
-        justify-content: space-between;
+    .search-grid {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .address-card {
+        padding: 20px;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
     }
 
     .pagination-nav {
-        width: 100%;
         justify-content: space-between;
+        width: 100%;
+    }
+
+    .schedule-table, .schedule-table thead, .schedule-table tbody, .schedule-table th, .schedule-table td, .schedule-table tr {
+        display: block;
+    }
+
+    .schedule-table thead {
+        display: none;
+    }
+
+    .schedule-table tr {
+        padding: 16px 0;
+        border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .schedule-table tr:hover td {
+        background-color: transparent;
+    }
+
+    .schedule-table tr:last-child {
+        border-bottom: none;
+    }
+
+    .schedule-table td {
+        padding: 8px 0;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        text-align: right;
+    }
+
+    .schedule-table td::before {
+        content: attr(data-label);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #64748b;
+        text-align: left;
     }
 }
-
-
