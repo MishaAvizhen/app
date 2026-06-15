@@ -1,3 +1,50 @@
-<div style="text-align: center; margin-top: 20px; padding: 20px;">
-    <app-schedule></app-schedule>
-</div>
+<!-- Upper Menu in Wix Style (Wix Header Menu) -->
+<header class="wix-navbar">
+    <div class="nav-container">
+
+        <!-- ===== LOGO (LEFT SIDE) ===== -->
+        <div class="nav-logo">
+            <!-- Template variable changed to unique #linkLogo -->
+            <a href="#home" #linkLogo
+               class="nav-link-anchor"
+               (click)="setActive(linkLogo)">
+                <img src="assets/IS_logo.svg" alt="Иста Сервис Логотип" class="logo-img">
+            </a>
+
+            <!-- Slogan moved inside .nav-logo for perfect layout alignment -->
+            <p class="logo-description">
+                Мы создаем прозрачность в энергопотреблении!
+            </p>
+        </div>
+
+        <!-- ===== NAVIGATION MENU (RIGHT SIDE) ===== -->
+        <nav class="nav-menu">
+            <!-- Active link defaults to Home page -->
+            <a href="#home" #linkHome
+               class="nav-link active"
+               (click)="setActive(linkHome)">Главная</a>
+
+            <a href="#schedule" #linkSchedule
+               class="nav-link"
+               (click)="setActive(linkSchedule)">График работ</a>
+
+            <a href="#contacts" #linkContacts
+               class="nav-link"
+               (click)="setActive(linkContacts)">Контакты</a>
+        </nav>
+
+    </div>
+</header>
+
+<!-- Main Content Area -->
+<main class="main-content">
+    <app-home id="home"></app-home>
+    <app-schedule id="schedule"></app-schedule>
+    <app-contacts id="contacts"></app-contacts>
+</main>
+
+<!-- Footer with Copyright -->
+<footer class="app-footer">
+    <p>© Иста Сервис, 2022-2026. Мы создаем прозрачность в энергопотреблении!</p>
+    <div class="footer-date">15.06.2026</div>
+</footer>

@@ -7,7 +7,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
     ngOnInit(): void {
+
     }
+
 
     // title = 'Hello World Angular App';
     // message: string = 'Loading...';
@@ -136,5 +138,14 @@ export class AppComponent implements OnInit {
     //     );
     //
     // }
+
+    setActive(clickedLink: HTMLElement): void {
+        // Находим все ссылки в меню и убираем у них класс active
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(link => link.classList.remove('active'));
+
+        // Добавляем класс active той ссылке, на которую кликнули
+        clickedLink.classList.add('active');
+    }
 
 }

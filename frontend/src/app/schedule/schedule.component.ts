@@ -1,38 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ScheduleService} from './schedule.service';
-import {Schedule} from './schedule.model';
-import {Subscription} from 'rxjs';
-import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ScheduleService } from './schedule.service';
+import { Schedule } from './schedule.model';
+import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 
 @Component({
     selector: 'app-schedule',
     templateUrl: './schedule.component.html',
-    styleUrls: ['./schedule.component.css'],
-    animations: [
-        trigger('cardAnimation', [
-            // Переход срабатывает при изменении количества элементов (фильтрация или смена страницы)
-            transition('* => *', [
-                // Скрываем новые элементы до начала анимации
-                query(':enter', [
-                    style({ opacity: 0, transform: 'translateY(15px)' })
-                ], { optional: true }),
+    styleUrls: ['./schedule.component.css']
 
-                // Эффект плавного "появления по очереди" (stagger) для карточек
-                query(':enter', [
-                    stagger('60ms', [
-                        animate('250ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-                    ])
-                ], { optional: true })
-            ])
-        ])
-    ]
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
     schedules: Schedule[] = [];
-    filteredSchedules: Schedule[] = []; // Промежуточный массив отфильтрованных данных
-    pagedSchedules: Schedule[] = [];    // Хранит физический массив для текущей страницы
+    filteredSchedules: Schedule[] = [];
+    pagedSchedules: Schedule[] = [];
 
-    // Динамические списки для автокомплита
     citiesList: string[] = [];
     streetsList: string[] = [];
 
@@ -42,14 +24,22 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     searchStreet: string = '';
     searchBuilding: string = '';
 
-    // Настройки пагинации
     currentPage: number = 1;
     pageSize: number = 2;
     totalPages: number = 1;
 
     private sub: Subscription;
+    url: SafeResourceUrl;
 
-    constructor(private scheduleService: ScheduleService) {
+    // ИСПРАВЛЕНО: Объединили два конструктора в один легитимный
+    constructor(
+        private scheduleService: ScheduleService,
+        private sanitizer: DomSanitizer
+    ) {
+        // ИСПРАВЛЕНО: Указали чистый адрес виджета Яндекса для Бядули 12 без CSP-блокировок
+        const url ="https://yandex.ru/map-widget/v1/?text=Минск%20улица%20Змитрока%20Бядули%2012&z=17&l=map&pt=27.566100,53.910200~pm2blm";
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
     }
 
     ngOnInit() {
@@ -57,7 +47,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
             (data) => {
                 this.schedules = data && data.schedules ? data.schedules : [];
                 this.isLoading = false;
-                // Инициализируем цепочку обработки данных
                 this.updateAllData();
             },
             (err) => {
@@ -67,14 +56,12 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         );
     }
 
-    // Главный метод управления потоком данных
     private updateAllData() {
         this.applyFilter();
         this.updateDatalists();
         this.updatePage();
     }
 
-    // 1. Фильтрация в ЛЮБОЙ последовательности
     private applyFilter() {
         const queryCity = this.searchCity.trim().toLowerCase();
         const queryStreet = this.searchStreet.trim().toLowerCase();
@@ -93,7 +80,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         });
     }
 
-    // 2. Генерация динамических подсказок в зависимости от ввода
     private updateDatalists() {
         const cities = new Set<string>();
         const streets = new Set<string>();
@@ -102,11 +88,9 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         const currentStreet = this.searchStreet.trim().toLowerCase();
 
         this.schedules.forEach(sc => {
-            // Подсказки городов сужаются, если введена улица
             if (!currentStreet || (sc.street || '').toLowerCase().includes(currentStreet)) {
                 if (sc.city) cities.add(sc.city.trim());
             }
-            // Подсказки улиц сужаются, если введен город
             if (!currentCity || (sc.city || '').toLowerCase().includes(currentCity)) {
                 if (sc.street) streets.add(sc.street.trim());
             }
@@ -116,7 +100,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         this.streetsList = Array.from(streets).sort();
     }
 
-    // 3. Расчет страниц и нарезка массива (Срабатывает триггер анимации)
     private updatePage() {
         this.totalPages = Math.ceil(this.filteredSchedules.length / this.pageSize) || 1;
 
@@ -125,12 +108,9 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         }
 
         const startIndex = (this.currentPage - 1) * this.pageSize;
-
-        // Создаем новую ссылку на кусок массива. Это стриггерит [@cardAnimation] в HTML
         this.pagedSchedules = this.filteredSchedules.slice(startIndex, startIndex + this.pageSize);
     }
 
-    // Переключение страниц кнопочками Назад/Вперед
     setPage(page: number) {
         if (page >= 1 && page <= this.totalPages) {
             this.currentPage = page;
@@ -139,13 +119,11 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         }
     }
 
-    // При изменении любого инпута
     onInputChange() {
         this.currentPage = 1;
         this.updateAllData();
     }
 
-    // Изменение количества элементов на странице
     onPageSizeChange() {
         this.currentPage = 1;
         this.updatePage();

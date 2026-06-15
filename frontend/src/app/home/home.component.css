@@ -1,0 +1,213 @@
+.home-content {
+    max-width: 1300px;
+    margin: 40px auto 0; /* Добавлено 40px сверху, auto для боков, 0 снизу */
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(2px);
+    border-radius: 48px;
+    padding: 28px 28px 40px;
+    box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+
+/* ===== WIX-STYLE HEADER ===== */
+.wix-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.wix-header h2 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1F3B4C, #2A5F6E);
+    background-clip: revert;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.wix-subtitle {
+    font-size: 1rem;
+    color: #4a627a;
+    max-width: 620px;
+    margin: 0 auto;
+    font-weight: 400;
+    background: rgba(255, 255, 240, 0.7);
+    padding: 8px 20px;
+    border-radius: 60px;
+    backdrop-filter: blur(4px);
+    display: inline-block;
+}
+
+/* ===== HOME FEATURES GRID ===== */
+.home-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    background: transparent;
+    margin-top: 20px;
+}
+
+/* ===== FEATURE ITEM ===== */
+.feature-item {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbfe 100%);
+    border-radius: 32px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(80, 140, 140, 0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: left;
+}
+
+.feature-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 40px -16px rgba(0, 60, 70, 0.2);
+    border-color: rgba(47, 128, 122, 0.3);
+}
+
+/* Иконки через псевдоэлементы */
+.feature-item:nth-child(1) h3::before {
+    content: '🏢 ';
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.feature-item:nth-child(2) h3::before {
+    content: '🔧 ';
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.feature-item:nth-child(3) h3::before {
+    content: '⭐ ';
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.feature-item h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1F3B4C;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.feature-item h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #2A5F6E, #7AB3A8);
+    border-radius: 3px;
+}
+
+.feature-item p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #2c4a5c;
+    margin-top: 16px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 900px) {
+    .home-content {
+        padding: 24px 20px 36px;
+        margin: 0 12px;
+    }
+
+    .home-features {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .wix-header h2 {
+        font-size: 2.3rem;
+    }
+
+    .wix-subtitle {
+        font-size: 1rem;
+    }
+
+    .feature-item h3 {
+        font-size: 1.5rem;
+    }
+
+    .feature-item p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-content {
+        padding: 20px 16px 28px;
+        border-radius: 32px;
+    }
+
+    .wix-header h2 {
+        font-size: 1.9rem;
+    }
+
+    .feature-item {
+        padding: 24px 20px;
+        text-align: center;
+    }
+
+    .feature-item h3 {
+        font-size: 1.3rem;
+        display: block;
+    }
+
+    .feature-item h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .feature-item p {
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .feature-item:nth-child(1) h3::before,
+    .feature-item:nth-child(2) h3::before,
+    .feature-item:nth-child(3) h3::before {
+        font-size: 2rem;
+    }
+}
+
+/* ===== АНИМАЦИЯ ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-item {
+    animation: fadeInUp 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) backwards;
+}
+
+.feature-item:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.feature-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.feature-item:nth-child(3) {
+    animation-delay: 0.15s;
+}

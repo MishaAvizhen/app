@@ -4,7 +4,22 @@
         <h2>График проведения работ</h2>
         <p class="wix-subtitle">Узнайте точное время и статус проведения плановых мероприятий по вашему адресу</p>
     </div>
-
+    <div class="ista-info-banner">
+        <div class="info-card">
+            <span class="info-icon">🌡️</span>
+            <div class="info-text">
+                <h4>Поквартирный учет тепла</h4>
+                <p>Плановые обходы позволяют настроить индивидуальное регулирование и сэкономить от 20% до 50% затрат на отопление.</p>
+            </div>
+        </div>
+        <div class="info-card">
+            <span class="info-icon">📡</span>
+            <div class="info-text">
+                <h4>Современные технологии</h4>
+                <p>Мы используем инфраструктуру, исключающую необходимость ручного считывания показаний нашими специалистами на месте в будущем.</p>
+            </div>
+        </div>
+    </div>
     <!-- Сетка поиска -->
     <div class="search-grid" *ngIf="!isLoading && schedules.length > 0">
         <!-- Поле: Город -->
@@ -63,8 +78,7 @@
 
     <!-- Вывод результатов -->
     <div *ngIf="!isLoading">
-        <!-- НАСТРОЕНА АНИМАЦИЯ: Обертка триггера анимации плавного появления карточек при фильтрации и пагинации -->
-        <div [@cardAnimation]="pagedSchedules.length">
+        <div>
             <div *ngFor="let sc of pagedSchedules; trackBy: trackByAddress" class="address-card">
                 <div class="card-header">
                     <div class="address-badge">Адрес объекта</div>
@@ -127,7 +141,9 @@
                     Вперед <span class="btn-arrow">&rarr;</span>
                 </button>
             </div>
-            <div>12.06.2026</div>
+
         </div>
     </div>
+
+
 </div>

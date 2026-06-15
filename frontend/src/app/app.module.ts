@@ -10,19 +10,21 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 
 import {ScheduleComponent} from "./schedule/schedule.component";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ContactsComponent} from "./contacts/contacts.component";
+import {HomeComponent} from "./home/home.component";
+
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        ScheduleComponent
-
+        ScheduleComponent,
+        ContactsComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
         HttpClientModule,  // This is correct for Angular 8
         FormsModule
     ],
