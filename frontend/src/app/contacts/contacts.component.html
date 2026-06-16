@@ -7,11 +7,65 @@
 
     <div class="map-section">
         <div class="map-grid">
-            <!-- Информация об объекте слева -->
+
+            <!-- Левая колонка: Основная информация и контакты -->
             <div class="contact-card">
                 <h3>«Иста Сервис»</h3>
                 <p class="address-text">📍 ул. Змитрака Бядули, д. 12<br>г. Минск, 220034, Беларусь</p>
 
+                <!-- Новое: Абонентский отдел -->
+                <div class="info-block">
+                    <h4>Абонентский отдел (индивидуальный учет тепла):</h4>
+                    <p class="block-description">Заключение договоров на обслуживание по ИПУ тепла, персональные консультации по расчетам за теплоснабжение на основании показаний приборов.</p>
+                    <div class="schedule-badge">🕒 Рабочие дни: с 9:00 до 17:00</div>
+                </div>
+
+                <!-- Новое: Телефоны и Email -->
+
+                <div class="info-block">
+                    <h4>Связь с нами:</h4>
+                    <div class="contact-links-vertical">
+
+                        <!-- Городские телефоны -->
+                        <div class="contact-row">
+                            <span class="contact-icon icon-phone">☎️</span>
+                            <div class="phone-group">
+                                <a href="tel:+375172245667" class="phone-link-clean">+375 17 224-5667</a>,
+                                <a href="tel:+375172245668" class="phone-link-clean">224-5668</a>
+                            </div>
+                        </div>
+
+                        <!-- А1 -->
+                        <div class="contact-row">
+                            <span class="contact-icon brand-logo brand-a1">A¹</span>
+                            <a href="tel:+375291930700" class="phone-link-clean">+375 29 1-930-700</a>
+                        </div>
+
+                        <!-- МТС -->
+                        <div class="contact-row">
+                            <span class="contact-icon brand-logo brand-mts"><span class="mts-egg-white"></span></span>
+                            <a href="tel:+375336933700" class="phone-link-clean">+375 33 6-933-700</a>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="contact-row">
+                            <span class="contact-icon icon-mail">✉️</span>
+                            <a href="mailto:billing@ista-s.by" class="email-link-clean">billing@ista-s.by</a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- Новое: Директор -->
+                <div class="info-block director-block">
+                    <h4>Директор:</h4>
+                    <p class="director-name">Петухов Денис Семенович</p>
+                    <p class="director-hours">👥 Прием граждан: последняя пятница месяца с 15:00 до 17:00 (по предварительной записи).</p>
+                </div>
+
+                <!-- Метро -->
                 <div class="work-hours">
                     <h4>Ближайшее метро:</h4>
                     <div class="metro-info-container">
@@ -31,30 +85,38 @@
                             <span class="metro-walk-distance">🚶 1.74 км</span>
                         </div>
                     </div>
-                    <br>
                 </div>
 
                 <!-- Ссылка-кнопка для открытия в мобильном приложении Навигатора -->
-                <a href="https://yandex.by/maps/157/minsk/?ll=27.585084%2C53.905100&mode=poi&poi%5Bpoint%5D=27.584111%2C53.905143&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D60271176825&z=16.81" target="_blank" rel="noopener noreferrer" class="route-btn">
+                <a href="https://yandex.by" target="_blank" rel="noopener noreferrer" class="route-btn">
                     🗺️ Открыть в Яндекс Картах
                 </a>
-
             </div>
 
-            <div class="map-wrapper">
-                <iframe
-                        src="https://yandex.ru/map-widget/v1/?z=17&ol=biz&oid=60271176825&l=map"
-                        width="100%"
-                        height="350"
-                        frameborder="0"
-                        allowfullscreen="true"
-                        style="position:relative; border:0;">
-                </iframe>
-                <p style="text-align: center; font-size: 13px; color: #555; margin-top: 8px;">
-                    📍 <strong>Иста Сервис</strong> — ул. Бядули, 12. Нажмите на метку, чтобы увидеть контакты.
-                </p>
+            <!-- Правая колонка: Карта и реквизиты -->
+            <div class="right-column-container">
+                <!-- Интерактивная карта -->
+                <div class="map-wrapper">
+                    <iframe
+                            src="https://yandex.ru/map-widget/v1/?z=17&ol=biz&oid=60271176825&l=map"
+                            allowfullscreen="true">
+                    </iframe>
+                    <p>📍 <strong>Иста Сервис</strong> — ул. Бядули, 12. Нажмите на метку, чтобы увидеть контакты.</p>
+                </div>
+
+                <!-- Новое: Банковские реквизиты -->
+                <div class="requisites-card">
+                    <h3>Реквизиты компании</h3>
+                    <div class="req-grid">
+                        <div class="req-item"><strong>УНП:</strong> <span>193 621 408</span></div>
+                        <div class="req-item"><strong>ОКПО:</strong> <span>505 968 835 000</span></div>
+                        <div class="req-item"><strong>Текущий счет (IBAN):</strong> <span class="iban">BY11TECN30127323600000000010</span></div>
+                        <div class="req-item"><strong>Банк:</strong> <span>ОАО "Технобанк", БИК TECNBY22</span></div>
+                        <div class="req-item"><strong>Адрес банка:</strong> <span>г. Минск, ул. Кропоткина, 44</span></div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
-
 </div>
