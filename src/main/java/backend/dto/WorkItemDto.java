@@ -7,6 +7,15 @@ public class WorkItemDto {
     private String workDate;
     private String workStartTime;
     private String workEndTime;
+    private Boolean main;
+
+    public Boolean getMain() {
+        return main;
+    }
+
+    public void setMain(Boolean main) {
+        this.main = main;
+    }
 
     public String getWorkDescription() {
         return workDescription;

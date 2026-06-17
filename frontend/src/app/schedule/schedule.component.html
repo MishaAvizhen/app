@@ -88,17 +88,30 @@
                 <table class="schedule-table">
                     <thead>
                     <tr>
-                        <th scope="col">Объект / Подъезд</th>
+                        <th scope="col">Подъезд / Тип</th>
                         <th scope="col">Дата проведения</th>
                         <th scope="col">Время</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let item of sc.items">
-                        <td data-label="Объект / Подъезд" class="font-medium">{{ item.workDescription }}</td>
-                        <!-- Стильный тег для даты в Wix стиле -->
-                        <td data-label="Дата проведения"><span class="date-tag">{{ item.workDate }}</span></td>
-                        <td data-label="Время" class="time-text">{{ item.workStartTime }} – {{ item.workEndTime }}</td>
+                    <tr *ngFor="let item of sc.items" [class.additional-row]="!item.main">
+                        <td data-label="Подъезд" class="font-medium">
+                            <div class="work-info">
+                                <span>{{ item.workDescription }}</span>
+
+                                <span class="type-badge" [class.badge-main]="item.main" [class.badge-add]="!item.main">
+                                {{ item.main ? '' : 'Дополнительный обход' }}
+                            </span>
+                            </div>
+                        </td>
+                        <td data-label="Дата проведения">
+                        <span class="date-tag" [class.date-tag-additional]="!item.main">
+                            {{ item.workDate }}
+                        </span>
+                        </td>
+                        <td data-label="Время" class="time-text" [class.time-text-additional]="!item.main">
+                            {{ item.workStartTime }} – {{ item.workEndTime }}
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -144,6 +157,7 @@
 
         </div>
     </div>
+
 
 
 </div>

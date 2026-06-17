@@ -3,6 +3,7 @@ export interface WorkItem {
     workDate: string;
     workStartTime: string;
     workEndTime: string;
+    main: boolean
 }
 
 export interface Schedule {

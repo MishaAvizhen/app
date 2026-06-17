@@ -115,7 +115,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
         if (page >= 1 && page <= this.totalPages) {
             this.currentPage = page;
             this.updatePage();
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     }
 
@@ -127,7 +126,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     onPageSizeChange() {
         this.currentPage = 1;
         this.updatePage();
-        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     clearAllFilters() {

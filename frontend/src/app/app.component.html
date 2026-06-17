@@ -7,9 +7,10 @@
             <!-- Template variable changed to unique #linkLogo -->
             <a href="#home" #linkLogo
                class="nav-link-anchor"
-               (click)="setActive(linkLogo)">
+               (click)="$event.preventDefault(); setActive(linkLogo, 'home')">
                 <img src="assets/IS_logo.svg" alt="Иста Сервис Логотип" class="logo-img">
             </a>
+
 
             <!-- Slogan moved inside .nav-logo for perfect layout alignment -->
             <p class="logo-description">
@@ -19,19 +20,20 @@
 
         <!-- ===== NAVIGATION MENU (RIGHT SIDE) ===== -->
         <nav class="nav-menu">
-            <!-- Active link defaults to Home page -->
             <a href="#home" #linkHome
                class="nav-link active"
-               (click)="setActive(linkHome)">Главная</a>
+               (click)="$event.preventDefault(); setActive(linkHome, 'home')">Главная</a>
 
             <a href="#schedule" #linkSchedule
                class="nav-link"
-               (click)="setActive(linkSchedule)">График работ</a>
+               (click)="$event.preventDefault(); setActive(linkSchedule, 'schedule')">График работ</a>
 
             <a href="#contacts" #linkContacts
                class="nav-link"
-               (click)="setActive(linkContacts)">Контакты</a>
+               (click)="$event.preventDefault(); setActive(linkContacts, 'contacts')">Контакты</a>
         </nav>
+
+
 
     </div>
 </header>
@@ -46,5 +48,5 @@
 <!-- Footer with Copyright -->
 <footer class="app-footer">
     <p>© Иста Сервис, 2022-2026. Мы создаем прозрачность в энергопотреблении!</p>
-    <div class="footer-date">16.06.2026</div>
+    <div class="footer-date">17.06.2026</div>
 </footer>
