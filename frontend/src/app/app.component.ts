@@ -11,22 +11,28 @@ export class AppComponent implements OnInit {
     }
 
     setActive(linkElement: HTMLElement, targetId: string) {
-        // 1. Плавный скролл к секции
+        // 1. Плавный скролл к нужной секции
         const element = document.getElementById(targetId);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 2. Сброс активного класса у всех ссылок в навигации
-        // Находим родителя и убираем класс active у его детей
-        const parent = linkElement.parentElement;
-        if (parent) {
-            const links = parent.querySelectorAll('.nav-link');
-            links.forEach(link => link.classList.remove('active'));
-        }
+        // 2. Полностью сбрасываем класс active у всех ссылок
+        const allLinks = document.querySelectorAll('.nav-link, .nav-link-anchor');
+        allLinks.forEach(link => link.classList.remove('active'));
 
-        // 3. Добавляем класс active той ссылке, на которую кликнули
-        linkElement.classList.add('active');
+        // 3. Проверяем, куда кликнули
+        if (linkElement.classList.contains('nav-link-anchor')) {
+            // Если клик по логотипу: находим в меню ссылку "Главная" по ее href и подсвечиваем
+            const homeLink = document.querySelector('a[href="#home"].nav-link');
+            if (homeLink) {
+                homeLink.classList.add('active');
+            }
+        } else {
+            // Если клик по обычному пункту меню: подсвечиваем именно его
+            linkElement.classList.add('active');
+        }
     }
+
 
 }
